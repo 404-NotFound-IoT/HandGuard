@@ -2,7 +2,7 @@ import cv2
 import threading
 import requests
 from flask import Flask, jsonify
-from manos import Detectormanos
+from Manos import Detectormanos
 
 app = Flask(__name__)
 detector = Detectormanos()
