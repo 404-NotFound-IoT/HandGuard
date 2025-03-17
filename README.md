@@ -1,9 +1,16 @@
 # HandGuard
+<<<<<<< HEAD
+=======
+# Descripción
+>>>>>>> c28784d3db1323cedc0d6605ce98856c64708718
 
 # Descripción
 
+<<<<<<< HEAD
 HandGuard es un proyecto que utiliza OpenCV, Flask y MediaPipe para la detección de gestos con las manos. Con base en el número de dedos levantados dentro de un área específica de la cámara, se controla el estado de una máquina y se envía la información a un servidor Flask en una Raspberry Pi.
 
+=======
+>>>>>>> c28784d3db1323cedc0d6605ce98856c64708718
 # Requisitos
 
 Python 3.x
@@ -52,7 +59,11 @@ Se muestra el video con anotaciones y el estado actual.
 
 Un servidor Flask permite consultar el estado a través de http://<IP>:5001/estado.
 
+<<<<<<< HEAD
 El programa muestra los FPS (fotogramas por segundo) en la esquina superior izquierda para monitorear el rendimiento.
+=======
+# Ejecución
+>>>>>>> c28784d3db1323cedc0d6605ce98856c64708718
 
 # Estructura del Proyecto
 
@@ -90,7 +101,7 @@ API
 
 GET /estado: Retorna el estado actual de la máquina en formato JSON.
 
-Detener el Programa
+# Detener el Programa
 
 Presiona la tecla q en la ventana de OpenCV o Esc para cerrar el programa.
 
@@ -100,6 +111,7 @@ Asegúrate de cambiar la dirección IP 192.168.0.100:5000 en el código para que
 
 La cámara debe estar bien posicionada para detectar correctamente los gestos.
 
+<<<<<<< HEAD
 # Contribuciones
 
 Si deseas contribuir, puedes abrir un Pull Request o reportar problemas en el repositorio.
@@ -108,6 +120,8 @@ Si deseas contribuir, puedes abrir un Pull Request o reportar problemas en el re
 
 Este proyecto está bajo la Licencia MIT.
 
+=======
+>>>>>>> c28784d3db1323cedc0d6605ce98856c64708718
 # Autor
 
 Proyecto desarrollado para control de máquinas con visión artificial y detección de gestos.
