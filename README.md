@@ -1,9 +1,9 @@
 # HandGuard
-Descripción
+# Descripción
 
 Este proyecto utiliza OpenCV, Flask y la librería Mediapipe para detectar gestos con las manos y controlar el estado de una máquina en función del número de dedos levantados dentro de un área específica de la cámara.
 
-Requisitos
+# Requisitos
 
 Python 3.x
 
@@ -15,7 +15,7 @@ Requests
 
 Mediapipe (para la detección de manos)
 
-Instalación de Dependencias
+# Instalación de Dependencias
 
 Ejecuta el siguiente comando para instalar las dependencias necesarias:
 
@@ -27,7 +27,7 @@ app.py: Script principal que maneja la detección de manos y el servidor Flask.
 
 manos.py: Contiene la clase Detectormanos para el procesamiento de imágenes y detección de manos.
 
-Funcionamiento
+# Funcionamiento
 
 Se inicia la cámara y se detectan las manos usando Mediapipe.
 
@@ -49,7 +49,7 @@ Se muestra el video con anotaciones y el estado actual.
 
 Un servidor Flask permite consultar el estado a través de http://<IP>:5001/estado.
 
-Ejecución
+# Ejecución
 
 Ejecuta el siguiente comando en la terminal:
 
@@ -59,17 +59,17 @@ API
 
 GET /estado: Retorna el estado actual de la máquina en formato JSON.
 
-Detener el Programa
+# Detener el Programa
 
 Presiona la tecla q en la ventana de OpenCV para cerrar el programa.
 
-Notas
+# Notas
 
 Asegúrate de cambiar la dirección IP 192.168.0.100:5000 en el código para que coincida con la de tu Raspberry Pi.
 
 La cámara debe estar bien posicionada para detectar correctamente los gestos.
 
-Autor
+# Autor
 
 Proyecto desarrollado para control de máquinas con visión artificial y detección de gestos.
 
