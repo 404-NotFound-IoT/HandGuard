@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estado de la Máquina</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+            background-color: #f4f4f4;
+        }
+        .estado {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .Encendido { color: green; }
+        .Paro { color: yellow; }
+        .Paro_de_emergencia { color: red; }
+        .Esperando_comando { color: blue; }
+
+        /* Contenedor de imágenes */
+        .image-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px; /* Espacio entre imágenes */
+            margin: 20px 0;
+        }
+        .pair-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 10px;
+        }
+        .pair {
+            display: flex;
+            justify-content: center;
+            gap: 10px; /* Espacio entre imágenes en un par */
+            border: 2px solid transparent;
+            border-radius: 10px;
+            padding: 10px;
+        }
+        .emergency { border-color: red; }
+        .operator { border-color: yellow; }
+        .reactivate { border-color: green; }
+
+        /* Estilos generales para las imágenes */
+        .command-img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover; /* Recorta la imagen para que se ajuste al contenedor */
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .command-img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Excepción: Imagen de reactivar (no recortada) */
+        .imagen-recortar {
+            object-fit: contain; /* Ajusta la imagen sin recortar */
+        }
+
+        /* Estilos para la tabla */
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+    <h1>Estado de la Máquina</h1>
+    <p>Estado actual: <strong id="estado" class="{{ ultimo_estado.replace(' ', '_') }}">{{ ultimo_estado }}</strong></p>
+    
+    <!-- Contenedor de imágenes -->
+    <div class="image-container">
+        <div class="pair-container">
+            <div class="pair emergency">
+                <img src="{{ url_for('static', filename='imagenes/imagen_paro_emergencia_izq.jpg') }}" alt="Paro de Emergencia Izquierda" class="command-img">
+                <img src="{{ url_for('static', filename='imagenes/imagen_paro_emergencia_der.jpg') }}" alt="Paro de Emergencia Derecha" class="command-img">
+            </div>
+            <p>Paro de emergencia con cualquier mano</p>
+        </div>
+
+        <div class="pair-container">
+            <div class="pair operator">
+                <img src="{{ url_for('static', filename='imagenes/imagen_paro_izq.jpg') }}" alt="Paro Izquierda" class="command-img">
+                <img src="{{ url_for('static', filename='imagenes/imagen_paro_der.jpg') }}" alt="Paro Derecha" class="command-img">
+            </div>
+            <p>Paro por operador con cualquier mano</p>
+        </div>
+
+        <div class="pair-container">
+            <div class="pair reactivate">
+                <img src="{{ url_for('static', filename='imagenes/imagen_reactivar.jpg') }}" 
+                     alt="Reactivar Izquierda" 
+                     class="command-img imagen-recortar"> 
+            </div>
+            <p>Quitar paro de emergencia o reactivar máquina (ambas manos)</p>
+        </div>
+    </div>
+
+    <h2>Registro de Estados</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Estado</th>
+                <th>Timestamp</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for registro in registros %}
+            <tr>
+                <td>{{ registro[0] }}</td>
+                <td>{{ registro[1] }}</td>
+                <td>{{ registro[2] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+   <script>
+    function actualizarEstado() {
+        fetch('/estado_actual')
+            .then(response => response.json())
+            .then(data => {
+                var estadoEl = document.getElementById('estado');
+                estadoEl.textContent = data.estado;
+                let claseEstado = data.estado.replace(/\s+/g, '_');
+                estadoEl.className = claseEstado;
+            })
+            .catch(error => console.error('Error al obtener el estado:', error));
+    }
+
+    function actualizarRegistros() {
+        fetch('/registros')
+            .then(response => response.json())
+            .then(data => {
+                var tbody = document.querySelector('table tbody');
+                tbody.innerHTML = ''; // Limpiar la tabla antes de actualizar
+
+                data.forEach(registro => {
+                    var row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${registro.id}</td>
+                        <td>${registro.estado}</td>
+                        <td>${registro.fecha_hora}</td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            })
+            .catch(error => console.error('Error al obtener los registros:', error));
+    }
+
+    setInterval(actualizarEstado, 2000);
+    setInterval(actualizarRegistros, 2000);
+</script>
+</body>
+</html>
