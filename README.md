@@ -1,4 +1,4 @@
-# HandGuard
+# HandGuard v1.1
 
 ## Descripción
 HandGuard es un proyecto que utiliza OpenCV, Flask y MediaPipe para la detección de gestos con las manos. Con base en el número de dedos levantados dentro de un área específica de la cámara, se controla el estado de una máquina y se envía la información a un servidor Flask en una Raspberry Pi.
